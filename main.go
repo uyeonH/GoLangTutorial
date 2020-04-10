@@ -2,29 +2,27 @@ package main
 
 import (
   "fmt"
+  "time"
 )
 
 func main() {
   
-  ch:=make(chan bool)
-  nums:=[2]string{"one","two"}
+  ch:=make(chan string)
+  nums:=[5]string{"one","two","three","four","five"}
 
   for _, n :=range nums{
     go isReady(n,ch)
   }
 
-  fmt.Println(<-ch)
-  fmt.Println(<-ch)
+  for i:=0; i<len(nums);i++{
+    fmt.Println(<-ch)
 
-  //deadlock
-  //fmt.Println(<-ch)
-
-  //result:=<-ch
-  //fmt.Println(result)
+  }
+  
 
 }
 
-  func isReady(nums string,ch chan bool){
-    fmt.Println(nums)
-    ch<-true
+  func isReady(num string,ch chan string){
+    time.Sleep(time.Second*3)
+    ch<-num+" clear"
   }
